@@ -11,16 +11,17 @@ ENV	CHEFPASS="changeme!!"
 ENV LOCAL_FILE="/tmp/chef-server.deb"
 ENV LOCAL_SCRIPTS="/usr/local/src/chef_scripts"
 ENV PATH="$LOCAL_SCRIPTS/:$PATH"
+ENV TIME_ZONE="America/Chicago"
 
 
 RUN apt-get update -y && \
-	apt-get install wget sudo -y --no-install-recommends
+	apt-get install wget tzdata sudo -y --no-install-recommends
 
 ADD scripts $LOCAL_SCRIPTS
 
 RUN chmod +x $LOCAL_SCRIPTS/*.sh
 
-RUN /bin/bash /usr/local/src/chefdk/getchef.sh
+RUN /bin/bash $LOCAL_SCRIPTS/getchef.sh
 
 RUN useradd -m ${CHEFUSER} -s /bin/bash && \
 	    (echo "${CHEFPASS}" ; echo "${CHEFPASS}") \

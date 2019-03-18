@@ -20,10 +20,16 @@
 #		    - Added chef_url environment
 #    v1.2 2019-02-26, Marcelo Franca:
 #		    - Added --no-check-certificate option
-#   v1.3 2019-03-13, Marcelo Franca:
+#   v1.3 2019-03-18, Marcelo Franca:
 #		    - Organizing statements of install into functions
+#   v1.4 2019-03-18, Marcelo Franca:
+#		    - Added function to set timezone of container
 # Licence: GPL.
 #
+function timezone() {
+	unlink /etc/localtime
+	ln -s /usr/share/zoneinfo/`echo $TIME_ZONE` /etc/localtime
+}
 installchef() {
 	dpkg -i $LOCAL_FILE > /dev/null 2>&1
 	if [[ $? == 0 ]]; then
@@ -43,5 +49,6 @@ else
 	echo -e "The Chef Server has not yet been installed.\n\n"
 	echo -e "Starting the Installation...\n\n"
 	sleep 5;
+	timezone;
 	installchef;
 fi

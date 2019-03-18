@@ -8,17 +8,23 @@ LABEL maintainer="<marcelo.frneves@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 ENV CHEFUSER=chefuser
 ENV	CHEFPASS="changeme!!"
+ENV LOCAL_FILE="/tmp/chef-server.deb"
+ENV LOCAL_SCRIPTS="/usr/local/src/chef_scripts"
+ENV PATH="$LOCAL_SCRIPTS/:$PATH"
+
 
 RUN apt-get update -y && \
 	apt-get install wget sudo -y --no-install-recommends
 
-ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+ADD scripts $LOCAL_SCRIPTS
 
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x $LOCAL_SCRIPTS/*.sh
 
-RUN useradd ${CHEFUSER} -s /bin/bash && \
-    (echo "${CHEFPASS}" ; echo "${CHEFPASS}") \
-    | passwd ${CHEFUSER} && gpasswd -a ${CHEFUSER} sudo
+RUN /bin/bash /usr/local/src/chefdk/getchef.sh
+
+RUN useradd -m ${CHEFUSER} -s /bin/bash && \
+	    (echo "${CHEFPASS}" ; echo "${CHEFPASS}") \
+	    | passwd ${CHEFUSER} && gpasswd -a ${CHEFUSER} sudo
 
 
 EXPOSE 443

@@ -18,9 +18,10 @@
 sha256="a95d248052c456fc5320eefbfe501c7e1282c029569fad5967f10f400e5a86d9"
 chef_url="https://packages.chef.io/files/stable/chef-server/12.19.26/ubuntu/18.04/chef-server-core_12.19.26-1_amd64.deb"
 
-if [[ $sha256 == $(wget -nv --no-check-certificate	 $chef_url -O $LOCAL_FILE && \
+if [[ $sha256 == $(wget --no-check-certificate $chef_url -O $LOCAL_FILE && \
 	sha256sum $LOCAL_FILE | awk '{print $1}') ]]; then
-
+    echo "Download completed"
+    exit 0;
 
 else
 	echo "Download failure. The sha256 code do not been match!!";

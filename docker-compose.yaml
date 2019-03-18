@@ -19,9 +19,12 @@ services:
     privileged: true
     stdin_open: true
     tty: true
-    #ipc: host
-    sysctls:
-      - kernel.shmmax=17179869184
+    #sysctls:
+    #  - kernel.shmmax=17179869184
+    extra_hosts:
+      - "localhost chef-server.mitlabs.com.br:127.0.0.1"
+    environment:
+      TIME_ZONE: "America/Sao_Paulo"
 networks:
   mitlabs:
     name: mitlabs

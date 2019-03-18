@@ -1,0 +1,28 @@
+version: "3.5"
+
+services:
+  chefserver:
+    container_name: chef-server
+    build:
+      context: ubuntu-18.04
+      dockerfile: Dockerfile
+      args:
+        CODE_VERSION: 18.04
+        BASE_DISTRO: ubuntu
+    ports:
+      - 443:443
+    networks:
+      - mitlabs
+    restart: always
+    domainname: mitlabs.com.br
+    hostname: chef-server.mitlabs.com.br
+    privileged: true
+    stdin_open: true
+    tty: true
+    #ipc: host
+    sysctls:
+      - kernel.shmmax=17179869184
+networks:
+  mitlabs:
+    name: mitlabs
+    driver: bridge

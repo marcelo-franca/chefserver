@@ -23,6 +23,14 @@ services:
     #  - kernel.shmmax=17179869184
     extra_hosts:
       - "localhost chef-server.mitlabs.com.br:127.0.0.1"
+      - "189.33.92.10 chef-server.mitlabs.com.br"
+      - "189.33.92.10 devops devops.mitlabs.com.br"
+      - "189.33.92.11 homolog homolog.mitlabs.com.br"
+      - "189.33.92.12 testing testing.mitlabs.com.br"
+      - "189.33.92.13 balancer balancer.mitlabs.com.br"
+      - "189.33.92.14 webserver01 webserver01.mitlabs.com.br"
+      - "189.33.92.15 webserver02 webserver02.mitlabs.com.br"
+      - "189.33.92.16 database database.mitlabs.com.br"
     environment:
       TIME_ZONE: "America/Sao_Paulo"
 networks:
